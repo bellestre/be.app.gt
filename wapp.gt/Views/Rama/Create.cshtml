@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Create Rama";
+}
+@model Models.gra.RamaInvestigacion;
+<head>
+    <style>
+        .example-modal .modal {
+            position: relative;
+            top: auto;
+            bottom: auto;
+            right: auto;
+            left: auto;
+            display: block;
+            z-index: 1;
+        }
+
+        .example-modal .modal {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<section class="content-header">
+    <h1>
+        Ramas 
+    </h1>
+    <ol class="breadcrumb">
+        <li title="Volver a inicio"><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Registrar rama</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="box box-primary animated fadeInRight">
+        <div class="box-header with-border">
+            <h3 class="box-title">Datos de rama</h3>
+        </div>
+
+        <form role="form" method="post" action="Create" class="form" id="form_rama">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    <input id="Nombre" for="Nombre" type="text" class="form-control" name="Nombre" placeholder="Nombre">
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button title="Limpiar" type="reset" class="btn btn-default">Limpiar</button>
+                @*<button title="ver modal" type="button" class="btn btn-default" data-toggle="modal" data-target="#eventModal">@Localizer["Ver Modal"]</button>*@
+                @*<button title="Agregar registro" type="submit" class="btn btn-success fa fa-plus pull-right"> Agregar</button>*@
+                <button title="Agregar registro" type="button" class="btn btn-success fa fa-plus pull-right" onclick="confirm()">Agregar</button>
+
+            </div>
+
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">"Confirmar"</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Desea guardar los cambios?&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">"Cerrar"</button>
+                            <button type="submit" value="Prueba" class="btn btn-primary">"Guardar registro"</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+
+        </form>
+
+        <div class="modal fade" id="eventModal" role="dialog" aria-labelledby="eventModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="eventModalLabel">Event</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="eventForm">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Titulo</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="EventTitle" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Start Time</label>
+                                <div class="col-sm-9">
+                                    <input type="datetime" class="form-control" id="StartTime">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">End Time</label>
+                                <div class="col-sm-9">
+                                    <input type="datetime" class="form-control" id="EndTime">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="Description" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3 offset-sm-9">
+                                    <label><input type="checkbox" id="AllDay" /> All Day</label>
+                                </div>
+                            </div>
+                            <input type="hidden" id="isNewEvent" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="deleteEvent">Delete</button>
+                        <div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="eventModalSave">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.row -->
+</section>
+
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="~/vendor/select2/select2.min.js"></script>
+<script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="~/js/myFuctions.js"></script>
+
+

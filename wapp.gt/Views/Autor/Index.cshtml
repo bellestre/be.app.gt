@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Index Autor";
+}
+@model List<Models.gra.Autor>
+
+<section class="content-header">
+    <h1>
+        Tesistas
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Tesistas</li>
+    </ol>
+</section>
+<div class="">
+    <div class="col-xs-12">       
+        <button type="button" data-toggle="modal" data-target="#myMapa" class="btn btn-info pull-right" style="margin-right: 5px;">
+            <i class="fa fa-map-marker"></i> Ver mapa
+        </button>
+    </div>
+</div>
+<section class="content">
+    <div class="row animated fadeInRight">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Gestionar Tesistas</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Correo electrónico</th>
+                                <th>Créditos</th>
+                                <th>Grado académico</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Paterno) @Html.DisplayFor(modelItem => item.Materno)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreditosAprobados)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.GradoAcademico)</td>
+                                    <td><a href="Update/@item.Id"><i title="Editar registro" class="fa fa-edit"></i></a> | <a href="" onclick="Delete('@item.Id')"><i title="Eliminar registro" class="fa fa-trash" style="color:red;"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row no-print">
+                        <div class="col-xs-12">
+                            <a href="/Tesis/Print" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                                <i class="fa fa-download"></i> Generar PDF
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myMapa">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">Mi mapa</h3>
+                </div>
+                <div class="modal-body" id="myModalBodyDiv1">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3937.5808423210624!2d-76.01846908577187!3d-9.281691999154692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a641e221eb957d%3A0x940d0c8935b3ddae!2sTech%20Solutions%20Peru!5e0!3m2!1ses!2spe!4v1580391915866!5m2!1ses!2spe" 
+                            width="560" height="450" frameborder="0" style="border:0;" allowfullscreen="">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 3 -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+
+    function Delete(id) {
+       alert(id)
+       var txt;
+       var r = confirm("¿Está seguro de eliminar este elemento?");
+        if (r == true) {
+           $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Delete", "Rama")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Index";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+
+        }
+
+    }
+
+</script>
+

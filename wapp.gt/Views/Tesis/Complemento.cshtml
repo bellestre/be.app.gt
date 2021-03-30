@@ -1,0 +1,37 @@
+﻿@model Models.gra.Tesis
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/bower_components/jquery/dist/jquery-ui.js"></script>
+<div>
+    <form id="myFormula">
+        @Html.HiddenFor(m => m.Id)
+        @Html.TextBoxFor(model => model.Codigo, new {@class = "form-control", @placeholder = ""})
+        @Html.TextBoxFor(model => model.Tema, new {@class = "form-control", @placeholder = ""})
+        @Html.TextBoxFor(model => model.Autor, new {@class = "form-control", @placeholder = ""})
+        @Html.TextBoxFor(model => model.Asesor, new {@class = "form-control", @placeholder = ""})
+
+        <a href="#" id="btnSubmi" class="btn btn-success btn-block">
+            @if (Model.Id > 0)
+            {<span>Update</span> }
+            else
+            {<span>Save</span>}
+        </a>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myFormula").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Tesis/Index",
+                data: myformdata,
+                success: function () {
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Tesis/Index";
+                }
+            })
+        })
+    })
+
+</script>

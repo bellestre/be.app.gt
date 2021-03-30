@@ -1,0 +1,63 @@
+﻿@*@model Models.gra.Tesis*@
+
+@using Models.gra;
+<head>
+    <style>
+        .example-modal .modal {
+            position: relative;
+            top: auto;
+            bottom: auto;
+            right: auto;
+            left: auto;
+            display: block;
+            z-index: 1;
+        }
+
+        .example-modal .modal {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<div class="modal fade" id="evaluateModal" role="dialog" aria-labelledby="eventModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eventModalLabel">Evaluar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    @foreach (TesisView item in ViewBag.UnicaTesis)
+                    {
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Codigo</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="" value="@item.Codigo">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Tema</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="" rows="5" value="@item.Tema"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Autor</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="" value="@item.Autor">
+                        </div>
+                    </div>
+                    <input type="hidden" id="" name="Id" value="@item.Id" />
+                    }
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="eventModalSave">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

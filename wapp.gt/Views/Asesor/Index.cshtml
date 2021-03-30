@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Index Asesor";
+}
+@model List<Models.gra.Asesor>
+
+<section class="content-header">
+    <h1>
+        Asesores
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Asesores</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row animated fadeInRight">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Gestionar Asesores</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example3" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Correo electrónico</th>                               
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Paterno) @Html.DisplayFor(modelItem => item.Materno)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                                    <td><a href="Update/@item.Id"><i title="Editar registro" class="fa fa-edit"></i></a> | <a href="" onclick="Delete('@item.Id')"><i title="Eliminar registro" class="fa fa-trash" style="color:red;"></i></a> | <a data-toggle="modal" data-target="#eventModal"><i title="Ver modal" class="fa fa-remove" style="color:forestgreen;"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row no-print">
+                        <div class="col-xs-12">
+                            <a href="/Tesis/Print" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                                <i class="fa fa-download"></i> Generar PDF
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 3 -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/js/myFuctions.js"></script>
+<script>
+    $(function (){
+        $('#example3').DataTable();
+    });
+
+    function Delete(id) {
+       alert(id)
+       var txt;
+       var r = confirm("¿Está seguro de eliminar este elemento?");
+        if (r == true) {
+           $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Delete", "Rama")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Index";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+
+        }
+
+    }
+</script>
+<partial name="Modal"/>

@@ -1,0 +1,213 @@
+﻿@{
+    ViewData["Title"] = "Create Autor";
+}
+<link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyASq8YmttACgZGX3HVwu-8eB37gtmhYqmY"></script>
+<script src="~/js/locationpicker.jquery.js"></script>
+<head>
+    <style>
+        .example-modal .modal {
+            position: relative;
+            top: auto;
+            bottom: auto;
+            right: auto;
+            left: auto;
+            display: block;
+            z-index: 1;
+        }
+
+        .example-modal .modal {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<section class="content-header">
+    <h1>
+        Tesista
+    </h1>
+    <ol class="breadcrumb">
+        <li title="Volver a inicio"><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Registrar tesista</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="box box-primary animated fadeInRight">
+        <div class="box-header with-border">
+            <h3 class="box-title">Datos de autor</h3>
+        </div>
+
+        <form role="form" method="post" id="form_id" action="Create" class="form">
+            <div class="box-body">
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Codigo">Código</label>
+                            <input id="Codigo" for="Codigo" type="text" class="form-control" name="Codigo" placeholder="Código">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Nombres">Nombres</label>
+                            <input id="Nombres" type="text" class="form-control" name="Nombres" placeholder="Nombres">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Paterno">Apellido paterno</label>
+                            <input id="Paterno" type="text" class="form-control" name="Paterno" placeholder="Apellido paterno">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Materno">Apellido materno</label>
+                            <input id="Materno" type="text" class="form-control" name="Materno" placeholder="Apellido materno">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input id="Correo" type="email" class="form-control" name="Correo" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Creditos">Créditos aprobados</label>
+                            <input id="Creditos" type="text" class="form-control" name="CreditosAprobados" placeholder="Créditos aprobados">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="Grado">Grado académico</label><br>
+                            <input type="radio" name="GradoAcademico" class="flat-red" value="Pregrado">Pregrado<br>
+                            <input type="radio" name="GradoAcademico" class="flat-red" value="Bachiller">Bachiller<br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="button" data-toggle="modal" data-target="#ModalMap" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-map-marker"></span><span id="ubicacion">Seleccionar Ubicación</span>
+                </button>
+                <button title="Limpiar" type="reset" class="btn btn-default">Limpiar</button>
+                @*<button title="Agregar registro" type="button" class="btn btn-success fa fa-plus pull-right" data-toggle="modal" data-target="#modal-default">Agregar</button>*@
+                <button title="Agregar registro" type="button" class="btn btn-success fa fa-plus pull-right" onclick="prueba()">Agregar</button>
+
+            </div>
+            <div class="modal fade" id="ModalMap" tabindex="-1" role="dialog">
+                <style>
+                    .pac-container {
+                        z-index: 99999;
+                    }
+                </style>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Ubicación:</label>
+                                <div class="col-sm-9">
+                                    @*<asp:TextBox id="Map-address" CssClass="form-control" runat="server"></asp:TextBox>*@
+                                    <input type="text" class="form-control" id="Map-address" />
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                            <div id="ModalMapPreview" style="width: 100%; height: 400px;"></div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="m-t-small">
+                                <label class="p-r-small col-sm-1 control-label">Lat.:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="ModalMap-lat" />
+                                </div>
+                                <label class="p-r-small col-sm-2 control-label">Long.:</label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="ModalMap-lon" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Aceptar</button>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <script>
+                                $('#ModalMapPreview').locationpicker({
+                                    radius: 0,
+                                    location: {
+                                        latitude: -9.313168,
+                                        longitude: -75.996661
+                                    },
+                                    inputBinding: {
+                                        latitudeInput: $('#ModalMap-lat'),
+                                        longitudeInput: $('#ModalMap-lon'),
+                                        locationNameInput: $('#Map-address')
+
+                                    },
+                                    enableAutocomplete: true,
+                                    onchanged: function (currentLocation, radius, isMarkerDropped) {
+                                        $('#ubicacion').html($('#Map-address').val());
+                                    }
+                                });
+                                $('#ModalMap').on('shown.bs.modal', function () {
+                                    $('#ModalMapPreview').locationpicker('autosize');
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">CONFIRMAR</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Desea guardar los cambios?&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" value="Prueba" class="btn btn-primary">Guardar registro</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+        </form>
+    </div>
+    <!-- /.row -->
+</section>
+
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="~/js/myFuctions.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('input[type="radio"].flat-red').iCheck({
+            radioClass: 'iradio_flat-green'
+        });
+    });
+
+</script>
