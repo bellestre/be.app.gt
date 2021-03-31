@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Models.gra;
+using Wapp.gt.Models;
 
 namespace Data.gra
 {
@@ -15,6 +16,8 @@ namespace Data.gra
         public DbSet<EtapaDeTesis> EtapaDeTesis { get; set; }
         public DbSet<EstadoDeEtapa> EstadoDeEtapa { get; set; }
         public DbSet<Asesor> Asesor { get; set; }
+
+        public DbSet<Inmueble> Inmueble { get;set }
 
     }
 }
