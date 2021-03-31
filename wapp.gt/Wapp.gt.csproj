@@ -5,6 +5,14 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Calendar.v3" Version="1.51.0.2237" />
@@ -26,6 +34,11 @@
     <Content Update="credentials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Views\Publish\" />
   </ItemGroup>
 
 </Project>
